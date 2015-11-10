@@ -4,8 +4,14 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-meteor-platform
-insecure
-urigo:angular
+meteor-base
+angular
+angular:angular-sanitize
 netanelgilad:ng-infinite-scroll
 less
+mquandalle:bower
+twbs:bootstrap
+angularui:angular-ui-bootstrap
+angularui:angular-ui-router
+angularui:ui-select
+mongo

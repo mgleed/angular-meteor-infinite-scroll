@@ -1,0 +1,17 @@
+{
+  "name": "meteor-cryptogram",
+  "version": "0.0.1",
+  "dependencies": {
+    "api-check": "~7.5.0",
+    "angular-formly": "~7.2.1",
+    "angular-formly-templates-bootstrap": "~6.1.5"
+  },
+  "ignoredDependencies": [
+    "angular"
+  ],
+  "private": true,
+  "resolutions": {
+    "angular-formly": "~7.2.1",
+    "angular-formly-templates-bootstrap": "~6.1.5"
+  }
+}
