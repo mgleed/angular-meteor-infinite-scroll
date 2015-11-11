@@ -69,23 +69,11 @@ if (Meteor.isClient) {
             
             $meteor.autorun($scope, function() {
               if ($scope.getReactively('images')){
-                console.log('send filtered signal to infinite-scroll');
                 $scope.$emit('list:filtered');    
               }
             });
             
             $meteor.autorun($scope, function() {
-              console.log('inside autorun');
-              console.log('limit is');
-              console.log(parseInt($scope.getReactively('perPage')));
-              console.log('skip is');
-              console.log(parseInt(($scope.getReactively('currentPage') - 1) * $scope.getReactively('perPage')));
-              console.log('  current page is');
-              console.log($scope.getReactively('currentPage'));
-              console.log('  per page is');
-              console.log($scope.getReactively('perPage'));
-              console.log('sort is');
-              console.log($scope.getReactively('model.sort'));              
               $scope.$meteorSubscribe('images', {
                 limit: parseInt($scope.getReactively('perPage'))*parseInt(($scope.getReactively('currentPage'))),
                 skip: 0,
@@ -94,7 +82,7 @@ if (Meteor.isClient) {
             });              
             
             $scope.loadMore = function() {
-              console.log('loading more');
+              // console.log('loading more');
               $scope.currentPage += 1;
             };         
             
