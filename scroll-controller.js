@@ -38,7 +38,7 @@ if (Meteor.isClient) {
       $scope.model = {
         shotBy: null,
         category: null,
-        sort: {dateSubmitted: -1},
+        sort: "dateSubmitted",
       };  
      
       // infinite-scroll logic & collection subscription //
@@ -68,7 +68,7 @@ if (Meteor.isClient) {
       $meteor.autorun($scope, function(){
         $scope.images = $scope.$meteorCollection(function() {
           $scope.currentPage = 1; // reset the length of returned images
-          return Images.find(getQuery(), { sort: $scope.getReactively('model.sort')});
+          return Images.find(getQuery(), { sort: parseSortModel($scope.getReactively('model.sort'))});
         });
         $scope.$emit('filtered'); // trigger infinite-scroll to load in case the height is too small 
       });
@@ -78,21 +78,20 @@ if (Meteor.isClient) {
         $scope.$meteorSubscribe('images', {
           limit: parseInt($scope.getReactively('perPage'))*parseInt(($scope.getReactively('currentPage'))),
           skip: 0,
-          sort: $scope.getReactively('model.sort'),
+          sort: parseSortModel($scope.getReactively('model.sort')),
           query: getQuery()
         });
       });              
       
       $scope.loadMore = function() {
-        // console.log('loading more');
         $scope.currentPage += 1;
       };         
       
-      function setSortObj(value) {
+      function parseSortModel(value) {
         var tmpObj = new Object;
         tmpObj[value] = -1;
         return tmpObj;
-      }                      
+      }          
       
       // Formly fields //
       $scope.fields = [
@@ -136,7 +135,6 @@ if (Meteor.isClient) {
         {     
           type: 'ui-select',
           key: 'sort',
-          parsers: [setSortObj],
           templateOptions: {
             label: 'Sort results',
             placeholder: '  Choose criteria',
