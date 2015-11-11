@@ -51,7 +51,7 @@ if (Meteor.isServer) {
     if (opts === undefined){
       return Images.find({});
     } else {
-      return Images.find({}, {
+      return Images.find(opts.query, {
         skip: opts.skip,
         limit: opts.limit,
         sort: opts.sort,

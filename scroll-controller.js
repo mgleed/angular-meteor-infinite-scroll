@@ -29,7 +29,7 @@ if (Meteor.isClient) {
   }]);    
   
   module.controller('ngInfiniteScrollCtrl', ['$scope', '$meteor', '$log',
-    function($scope, $meteor) {
+    function($scope, $meteor, $log) {
       // some ideas from here...
       // https://github.com/ndxbxrme/generator-angular-meteor/blob/master/generators/app/templates/bootstrap/client/main/main.controller(js).ng.js       
       
@@ -44,10 +44,9 @@ if (Meteor.isClient) {
       // infinite-scroll logic & collection subscription //
       $scope.currentPage = 1;
       $scope.perPage = 12;
-      $scope.orderProperty = '-1';
       $scope.query = {};
                 
-      $scope.images = $scope.$meteorCollection(function() {
+      function getQuery(){
         query={};            
         // if filtered by a user...
         if ($scope.getReactively('model.shotBy')) {
@@ -63,21 +62,24 @@ if (Meteor.isClient) {
             query.category = {$in: categories};
           }
         };
-        $scope.currentPage = 1; // reset
-        return Images.find(query, { sort: $scope.getReactively('model.sort')});
+        return query;
+      }
+                
+      $meteor.autorun($scope, function(){
+        $scope.images = $scope.$meteorCollection(function() {
+          $scope.currentPage = 1; // reset the length of returned images
+          return Images.find(getQuery(), { sort: $scope.getReactively('model.sort')});
+        });
+        $scope.$emit('filtered'); // trigger infinite-scroll to load in case the height is too small 
       });
       
       $meteor.autorun($scope, function() {
-        if ($scope.getReactively('images')){
-          $scope.$emit('list:filtered');    
-        }
-      });
-      
-      $meteor.autorun($scope, function() {
+        
         $scope.$meteorSubscribe('images', {
           limit: parseInt($scope.getReactively('perPage'))*parseInt(($scope.getReactively('currentPage'))),
           skip: 0,
-          sort: $scope.getReactively('model.sort')
+          sort: $scope.getReactively('model.sort'),
+          query: getQuery()
         });
       });              
       
@@ -148,10 +150,9 @@ if (Meteor.isClient) {
             labelProp: 'label',                   
             optionsAttr: 'bs-options',
             ngOptions: 'option[to.valueProp] as option in to.options | filter: $select.search',          
-          },      
+          }
         },              
-      ];   
-      // end fields      
+      ];       
     }
   ]);
 }
