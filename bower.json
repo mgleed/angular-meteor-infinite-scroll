@@ -4,7 +4,8 @@
   "dependencies": {
     "api-check": "~7.5.0",
     "angular-formly": "~7.2.1",
-    "angular-formly-templates-bootstrap": "~6.1.5"
+    "angular-formly-templates-bootstrap": "~6.1.5",
+    "ngInfiniteScroll": "~1.2.1"
   },
   "ignoredDependencies": [
     "angular"
