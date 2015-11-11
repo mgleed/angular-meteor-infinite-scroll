@@ -5,7 +5,7 @@
       <formly-form model="model" fields="fields" form="form" options="options"></formly-form>
     </form> 
 
-    <div infinite-scroll='loadMore()' infinite-scroll-distance='0'>
+    <div infinite-scroll='loadMore()' infinite-scroll-distance='0' infinite-scroll-listen-for-event="list:filtered">
         <div ng-repeat='image in images'> 
           <img ng-src='http://placehold.it/150x150&text={{image.index}}'>
           {{image.favorites}} favorites, {{image.category}}, by {{image.shotBy}} 

@@ -7,7 +7,6 @@
 meteor-base
 angular
 angular:angular-sanitize
-netanelgilad:ng-infinite-scroll
 less
 mquandalle:bower
 twbs:bootstrap
@@ -15,3 +14,4 @@ angularui:angular-ui-bootstrap
 angularui:angular-ui-router
 angularui:ui-select
 mongo
+tmeasday:publish-counts
